@@ -21,10 +21,19 @@ export default function () {
             {/* Contenitore per pulsanti */}
             <div className="flex justify-end space-x-4">
                 {/* Se l'utente non è loggato, mostra il pulsante per il login */}
-                {!isLoggedIn && location.pathname !== "/login" && (
-                    <button className="my-button text-[#b52c0a]">
-                        <Link to="/login">Login</Link>
-                    </button>
+                {!isLoggedIn && (
+                    <>
+                        {location.pathname !== "/login" && (
+                            <button className="my-button text-[#b52c0a]">
+                                <Link to="/login">Login</Link>
+                            </button>
+                        )}
+                        {location.pathname !== "/signup" && (
+                            <button className="my-button text-[#b52c0a]">
+                                <Link to="/signup">Sign Up</Link>
+                            </button>
+                        )}
+                    </>
                 )}
 
                 {/* Se l'utente è loggato, mostra il pulsante per creare un post e il logout */}

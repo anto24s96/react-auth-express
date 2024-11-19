@@ -1,24 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function () {
-    const { login, isLoggedIn } = useAuth();
-    const navigate = useNavigate();
+    const { signup } = useAuth();
 
     const initialData = {
-        email: "walter.white@mail.com",
-        password: "123456789",
+        email: "",
+        name: "",
+        password: "",
     };
 
     const [formData, setFormData] = useState(initialData);
-    const [loginError, setLoginError] = useState([]);
-
-    useEffect(() => {
-        if (isLoggedIn) {
-            navigate("/");
-        }
-    }, [isLoggedIn, navigate]);
+    const [signupError, setSignupError] = useState([]);
 
     const handleField = (e) => {
         const { name, value } = e.target;
@@ -29,10 +23,10 @@ export default function () {
         e.preventDefault();
 
         try {
-            await login(formData);
+            await signup(formData);
             setFormData(initialData);
         } catch (error) {
-            setLoginError(error);
+            setSignupError(error);
         }
     };
 
@@ -43,7 +37,7 @@ export default function () {
                 className="w-full max-w-xs bg-white p-6 rounded-lg shadow-lg"
             >
                 <h1 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
-                    Login
+                    Sign Up
                 </h1>
                 <div className="flex flex-col gap-4 text-gray-700">
                     <input
@@ -56,6 +50,14 @@ export default function () {
                         className="px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#cfef00] transition-all duration-200"
                     />
                     <input
+                        type="text"
+                        name="name"
+                        placeholder="Name"
+                        value={formData.name}
+                        onChange={handleField}
+                        className="px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#cfef00] transition-all duration-200"
+                    />
+                    <input
                         type="password"
                         required
                         name="password"
@@ -64,12 +66,12 @@ export default function () {
                         onChange={handleField}
                         className="px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#cfef00] transition-all duration-200"
                     />
-                    {loginError !== null && (
-                        <p className="text-red-500">{loginError.message}</p>
+                    {signupError !== null && (
+                        <p className="text-red-500">{signupError.message}</p>
                     )}
 
-                    {loginError?.errors &&
-                        loginError.errors.map((error, index) => (
+                    {signupError?.errors &&
+                        signupError.errors.map((error, index) => (
                             <p key={index} className="text-red-500">
                                 {error.msg}
                             </p>
@@ -79,7 +81,7 @@ export default function () {
                         type="submit"
                         className="cursor-pointer font-bold transition-all duration-200 py-2 px-6 rounded-full bg-[#cfef00] border border-transparent text-center shadow-lg hover:bg-[#c4e201] hover:border-[#b5d900] active:scale-95"
                     >
-                        Login
+                        Sign Up
                     </button>
                 </div>
             </form>

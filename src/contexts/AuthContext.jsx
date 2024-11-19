@@ -25,6 +25,26 @@ const AuthProvider = ({ children }) => {
         }
     };
 
+    const signup = async (payload) => {
+        try {
+            //Per evitare di mandare il campo name vuoto nella richiesta
+            if (!payload.name) delete payload.name;
+
+            const { data: response } = await axios.post(
+                "/auth/register",
+                payload
+            );
+            setUser(response.data);
+            localStorage.setItem("accessToken", response.token);
+            navigate("/");
+        } catch (err) {
+            const { message, errors } = err.response.data; // Aggiungi message qui
+            const error = new Error(message || "Errore nel signup");
+            error.errors = errors || [];
+            throw error;
+        }
+    };
+
     const logout = () => {
         setUser(null);
         localStorage.removeItem("accessToken");
@@ -32,7 +52,9 @@ const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, login, logout, user }}>
+        <AuthContext.Provider
+            value={{ isLoggedIn, login, signup, logout, user }}
+        >
             {children}
         </AuthContext.Provider>
     );

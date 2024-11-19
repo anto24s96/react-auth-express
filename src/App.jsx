@@ -8,6 +8,7 @@ import CreatePost from "./pages/CreatePost";
 import NotFound from "./pages/NotFound";
 import PrivatePage from "./components/middlewares/PrivatePage";
 import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
 
 export default function () {
     return (
@@ -16,6 +17,7 @@ export default function () {
             <Route path="/" element={<DefaultLayout />}>
                 <Route index element={<Home />} />
                 <Route path="login" element={<Login />} />
+                <Route path="signup" element={<SignUp />} />
                 <Route path="posts">
                     <Route index element={<Posts />} />
                     <Route path=":slug" element={<SinglePost />} />
@@ -24,15 +26,15 @@ export default function () {
             </Route>
 
             {/* Private Routes */}
-            <Route path="/" element={<DefaultLayout />}>
-                <Route
-                    path="create"
-                    element={
-                        <PrivatePage>
-                            <CreatePost />
-                        </PrivatePage>
-                    }
-                />
+            <Route
+                path="/"
+                element={
+                    <PrivatePage>
+                        <DefaultLayout />
+                    </PrivatePage>
+                }
+            >
+                <Route path="create" element={<CreatePost />} />
             </Route>
         </Routes>
     );
