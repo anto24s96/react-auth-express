@@ -7,8 +7,8 @@ export default function () {
     const navigate = useNavigate();
 
     const initialData = {
-        email: "walter.white@mail.com",
-        password: "123456789",
+        email: "",
+        password: "",
     };
 
     const [formData, setFormData] = useState(initialData);
