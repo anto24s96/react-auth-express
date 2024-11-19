@@ -3,7 +3,7 @@ import Navbar from "./Navbar";
 import { useAuth } from "../contexts/AuthContext";
 
 export default function () {
-    const { isLoggedIn, logout } = useAuth();
+    const { isLoggedIn, logout, user } = useAuth();
     const location = useLocation();
 
     return (
@@ -39,8 +39,8 @@ export default function () {
                 {/* Se l'utente è loggato, mostra il pulsante per creare un post e il logout */}
                 {isLoggedIn && (
                     <>
-                        {/* Nascond il bottone "Create Post" se siamo già nella pagina /create */}
-                        {location.pathname !== "/create" && (
+                        {/* Nascondo il bottone "Create Post" se siamo già nella pagina /create */}
+                        {user.isAdmin && location.pathname !== "/create" && (
                             <button className="my-button text-gray-700">
                                 <Link to="/create">Create Post</Link>
                             </button>

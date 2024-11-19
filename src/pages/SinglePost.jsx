@@ -1,9 +1,11 @@
 import axios from "../components/utils/axiosClient";
+import { useAuth } from "../contexts/AuthContext";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { RiArrowGoBackLine as TornaIndietro } from "react-icons/ri";
 import { IoMdTrash as Cestino } from "react-icons/io";
 
+// Material UI components
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -25,6 +27,7 @@ export default function SinglePost() {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const navigate = useNavigate();
+    const { user } = useAuth();
 
     // Funzione per recuperare il singolo post
     const fetchPost = async () => {
@@ -100,12 +103,14 @@ export default function SinglePost() {
                             <TornaIndietro className="text-3xl" /> Torna
                             Indietro
                         </button>
-                        <button
-                            className="flex items-center gap-1 text-lg my-button text-black mb-10"
-                            onClick={openDeleteModal}
-                        >
-                            Elimina Post <Cestino className="text-3xl" />
-                        </button>
+                        {user.isAdmin && (
+                            <button
+                                className="flex items-center gap-1 text-lg my-button text-black mb-10"
+                                onClick={openDeleteModal}
+                            >
+                                Elimina Post <Cestino className="text-3xl" />
+                            </button>
+                        )}
                     </div>
 
                     {/* Contenuto del singolo post */}

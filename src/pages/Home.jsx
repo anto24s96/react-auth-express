@@ -57,17 +57,26 @@ export default function () {
                 ))}
             </Swiper>
             <div className="text-center mt-10">
-                <h1 className="text-3xl font-bold mb-2">
-                    Benvenuto
-                    {isLoggedIn ? (
-                        <span className="text-red-500 capitalize inline-block mx-1 italic">
-                            {user.name}
-                        </span>
+                {isLoggedIn ? (
+                    user.isAdmin ? (
+                        <h1 className="text-3xl font-bold mb-4">
+                            Benvenuto
+                            <span className="text-[#b52c0a] inline-block mx-2 capitalize">
+                                {user.name}
+                            </span>
+                            e il tuo ruolo è Admin
+                        </h1>
                     ) : (
-                        ""
-                    )}
-                    !
-                </h1>
+                        <h1 className="text-3xl font-bold mb-4">
+                            Benvenuto
+                            <span className="text-[#b50aa4] inline-block mx-2 capitalize">
+                                {user.name}
+                            </span>
+                        </h1>
+                    )
+                ) : (
+                    <h1 className="text-3xl font-bold mb-4">Benvenuto</h1>
+                )}
             </div>
         </div>
     );
